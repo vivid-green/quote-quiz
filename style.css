@@ -1,0 +1,20 @@
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+.questionMark {
+    font-family: 'Bungee Shade', cursive;
+    font-size: 450px;
+    text-align: center;
+}
+
+.card-text {
+    font-family: 'Cormorant SC', serif;
+    font-size: x-large;
+}
+
+.nav {
+    font-size: large;
+}
