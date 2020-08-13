@@ -29,7 +29,7 @@ $( document ).ready(function() {
         nelsonMandela: {
             name: "Nelson Mandela",
             quote: "Education is the most powerful weapon which you can use to change the world.",
-            imgSrc: "./Assets/img/nelsonMandela.jpg"
+            imgSrc: "./Assets/img/neslonMandela.jpg"
         },
         pippin: {
             name: "Pippin",
@@ -92,6 +92,9 @@ $( document ).ready(function() {
     const cardTitle = document.getElementsByClassName("card-title");
     let countText = document.createElement("h1");
     const cardText = document.getElementsByClassName("card-text");
+    let modal = document.getElementsByClassName("modal-body");
+    let personImg = document.createElement("img");
+    let modalTitle = document.getElementsByClassName("modal-title");
     let questionIndex = 0;
     
     console.log(quotes);
@@ -100,8 +103,51 @@ $( document ).ready(function() {
     function pauseTimer(event) {
         clearInterval(interval);
     }
+
+    function randomizeChoices (answer, index) {
+        console.log(answer, index);
+        let randomChoices = [];
+        for(i = 0; i < 3; i++) {
+            let randomChoice = Math.floor(Math.random() * quotesKeys.length);
+            while(randomChoices.includes(randomChoice) || randomChoice === index) {
+
+                randomChoice = Math.floor(Math.random() * quotesKeys.length);
+            }
+            randomChoices.push(randomChoice);
+        }
+        let randomSplice = Math.floor(Math.random() * (randomChoices.length + 1));
+        randomChoices.splice(randomSplice, 0, index);
+        console.log(randomChoices);
+
+        randomChoices.forEach(element => {
+
+            let choiceButton = document.createElement("button");
+            choiceButton.innerHTML = quotes[quotesKeys[element]].name;
+            choiceButton.setAttribute("class", "btn btn-primary choices");
+            choiceButton.setAttribute("id", quotesKeys[element]);
+            choiceButton.setAttribute("type", "button");
+            choiceButton.setAttribute("data-toggle", "modal");
+            choiceButton.setAttribute("data-target", "#staticBackdrop");
+            card[0].appendChild(choiceButton);
+            choiceButton.addEventListener("click", triggerModal);
+        });
+    }
+
+    function triggerModal(event) {
+        console.dir(event.target);
+        personImg.removeAttribute("src");
+        personImg.setAttribute("src", quotes[event.target.id].imgSrc);
+        personImg.setAttribute("class", "img-fluid");
+        console.dir(modalTitle);
+        modalTitle[0].innerHTML = "";
+        modalTitle[0].append("You selected: " + quotes[event.target.id].name);
+        modal[0].appendChild(personImg);
+        pauseTimer();
+    }
     
     function setCard(event) {
+        let answer = quotes[quotesKeys[questionIndex]];
+        // console.log(answer);
         carousel.remove();
         beginButton.remove();
         countText.setAttribute("class", "questionMark");
@@ -109,14 +155,9 @@ $( document ).ready(function() {
         card[0].prepend(countText);
         cardTitle[0].innerHTML = "Who Said: ";
         cardText[0].innerHTML = "\"" + quotes[quotesKeys[questionIndex]].quote + "\"";
-        for(i = 0; i < 4; i++) {
-            let choiceButton = document.createElement("button");
-            let choiceText = Math.floor(Math.random() * (quotesKeys.length) + 1);
-            choiceButton.innerHTML = quotes[quotesKeys[choiceText]].name;
-            choiceButton.setAttribute("class", "btn btn-primary choices");
-            // console.dir(cardText);
-            card[0].appendChild(choiceButton);
-        }
+        console.log(questionIndex);
+        randomizeChoices(answer,questionIndex);
+        questionIndex++;
     }
 
     function startTimer(event) {
@@ -131,7 +172,16 @@ $( document ).ready(function() {
         }, 1000);
     }
 
+
     beginButton.addEventListener("click", setCard);
     beginButton.addEventListener("click", startTimer);
+    
+
+    // choices.addEventListener("click", function(event) {
+    //     event.preventDefault();
+    //     console.dir(event.target);
+    //   });
+    
+    
  
 });

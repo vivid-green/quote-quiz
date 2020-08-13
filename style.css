@@ -1,6 +1,12 @@
+body {
+    background-image: url(./Assets/img/paperBackground.png);
+    object-fit: cover;
+}
+
 .card {
     padding: 20px;
-    margin-top: 10px;
+    margin-top: 25px;
+    background-color: #fbed8d;
 }
 
 .card-title {
@@ -22,7 +28,7 @@
 
 .card-text {
     font-family: 'Noto Serif', serif;
-    font-size: 30px;
+    font-size: 35px;
 }
 
 .highscores {
@@ -31,7 +37,7 @@
 }
 
 .highscores:hover {
-    color: antiquewhite;
+    color: #fbed8d;
 }
 
 .questionMarkImg {
@@ -40,7 +46,32 @@
 
 .choices {
     margin: 10px;
-    font-size: large;
+    font-size: x-large;
     background-color: rgb(46, 46, 46);
     color: white;
+    font-family: 'Noto Serif', serif;
+    border: none;
 }
+
+.choices:hover {
+    background-color: #4A7EBB;
+}
+
+#begin-button {
+    margin: 10px;
+    font-size: x-large;
+    background-color: rgb(46, 46, 46);
+    color: white;
+    font-family: 'Noto Serif', serif;
+    border: none;
+}
+
+#begin-button:hover {
+    background-color: #4A7EBB;
+}
+
+/* .modalImg img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+} */
