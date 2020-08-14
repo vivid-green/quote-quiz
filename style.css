@@ -1,23 +1,25 @@
 body {
     background-image: url(./Assets/img/paperBackground.png);
-    object-fit: cover;
+    /* background-repeat: no-repeat; */
+    background-size: 100%;
 }
 
 .card {
-    padding: 20px;
-    margin-top: 25px;
+    padding: 10px;
+    margin: 10px;
     background-color: #fbed8d;
 }
 
 .card-title {
     font-family: 'Bungee Shade', cursive;
-    font-size: 50px;
+    font-size: 80px;
 }
 
 .card-img-top {
     width: 50%;
     height: 500px;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 .questionMark {
@@ -59,19 +61,24 @@ body {
 
 #begin-button {
     margin: 10px;
-    font-size: x-large;
+    font-size: 80px;
     background-color: rgb(46, 46, 46);
     color: white;
-    font-family: 'Noto Serif', serif;
+    font-family: 'Bungee Shade', cursive;
     border: none;
+    border-radius: 20px;
 }
 
 #begin-button:hover {
     background-color: #4A7EBB;
 }
 
-/* .modalImg img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-} */
+.initials-input {
+    background-color: #212529;
+    color: white;
+    font-family: 'Bungee Shade', cursive;
+    font-size: 80px;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+}

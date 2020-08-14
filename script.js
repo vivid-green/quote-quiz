@@ -86,6 +86,7 @@ $( document ).ready(function() {
     const quotesKeys = Object.keys(quotes);
     let interval;
     let countDown = 5;
+    let detraction = 10;
     const beginButton = document.getElementById("begin-button");
     const carousel = document.getElementById("people");
     const card = document.getElementsByClassName("card");
@@ -95,17 +96,31 @@ $( document ).ready(function() {
     let modal = document.getElementsByClassName("modal-body");
     let personImg = document.createElement("img");
     let modalTitle = document.getElementsByClassName("modal-title");
+    const checkAnswer = document.getElementById("check-answer");
+    const closeModal = document.getElementById("close-modal");
+    const xButton = document.getElementById("x-button");
+    const initialsInput = document.createElement("input");
+    initialsInput.setAttribute("class", "initials-input");
     let questionIndex = 0;
+    let answer;
+    let userAnswer;
     
     console.log(quotes);
-    console.log(quotesKeys);  
+    // console.log(quotesKeys);  
     
     function pauseTimer(event) {
         clearInterval(interval);
     }
 
+    function clearChoices() {
+        let choices = document.querySelectorAll(".choices");
+        for(i = 0; i < choices.length; i++) {
+            choices[i].remove();
+        }
+    }
+
     function randomizeChoices (answer, index) {
-        console.log(answer, index);
+        // console.log(answer, index);
         let randomChoices = [];
         for(i = 0; i < 3; i++) {
             let randomChoice = Math.floor(Math.random() * quotesKeys.length);
@@ -117,10 +132,9 @@ $( document ).ready(function() {
         }
         let randomSplice = Math.floor(Math.random() * (randomChoices.length + 1));
         randomChoices.splice(randomSplice, 0, index);
-        console.log(randomChoices);
+        // console.log(randomChoices);
 
         randomChoices.forEach(element => {
-
             let choiceButton = document.createElement("button");
             choiceButton.innerHTML = quotes[quotesKeys[element]].name;
             choiceButton.setAttribute("class", "btn btn-primary choices");
@@ -134,11 +148,15 @@ $( document ).ready(function() {
     }
 
     function triggerModal(event) {
-        console.dir(event.target);
+        // console.dir(event.target);
+        // console.dir(closeModal,xButton);
+        closeModal.style.display = "none";
+        xButton.style.display = "none";
+        userAnswer = quotes[event.target.id];
         personImg.removeAttribute("src");
         personImg.setAttribute("src", quotes[event.target.id].imgSrc);
         personImg.setAttribute("class", "img-fluid");
-        console.dir(modalTitle);
+        // console.dir(modalTitle);
         modalTitle[0].innerHTML = "";
         modalTitle[0].append("You selected: " + quotes[event.target.id].name);
         modal[0].appendChild(personImg);
@@ -146,42 +164,75 @@ $( document ).ready(function() {
     }
     
     function setCard(event) {
-        let answer = quotes[quotesKeys[questionIndex]];
+        answer = quotes[quotesKeys[questionIndex]];
         // console.log(answer);
         carousel.remove();
         beginButton.remove();
         countText.setAttribute("class", "questionMark");
-        countText.innerHTML = countDown;                  // Insert text
+        countText.innerHTML = countDown;
         card[0].prepend(countText);
         cardTitle[0].innerHTML = "Who Said: ";
         cardText[0].innerHTML = "\"" + quotes[quotesKeys[questionIndex]].quote + "\"";
-        console.log(questionIndex);
+        // console.log(questionIndex);
         randomizeChoices(answer,questionIndex);
         questionIndex++;
     }
 
     function startTimer(event) {
-        event.preventDefault();
-        interval = setInterval(function(){
-            countDown--;
-            countText.innerHTML = countDown;                  // Insert text
-            card[0].prepend(countText);
-            if(countDown <= 0) {
-                clearInterval(interval);
-            }
-        }, 1000);
+        if(countDown > 0) {
+            interval = setInterval(function(){
+                countDown--;
+                countText.innerHTML = countDown;
+                card[0].prepend(countText);
+                if(countDown <= 0) {
+                    pauseTimer();
+                }
+            }, 1000);
+        } else {
+            endGame();
+        }
     }
 
+    function answerModal(event) {
+        if(userAnswer.name === answer.name) {
+            modalTitle[0].innerHTML = "You answered correct!";
+        } else {
+            modalTitle[0].innerHTML = "You answered incorrect!" + "<hr>" + answer.name + " said that.";
+            personImg.removeAttribute("src");
+            personImg.setAttribute("src", answer.imgSrc);
+            personImg.setAttribute("class", "img-fluid");
+            modal[0].appendChild(personImg);
+            pauseTimer();
+            if(countDown - detraction <= 0) {
+                countDown = 0;
+            } else {
+                countDown = countDown - detraction;
+            }
+        }
+    }
+
+    function endGame(event) {
+        countText.style.fontSize = "300px"
+        countText.innerHTML = "GAME OVER";
+        clearChoices();
+        cardTitle[0].innerHTML = "ENTER HIGHSCORE"
+        cardTitle[0].style.textAlign = "center";
+        cardText[0].style.display = "none";
+        card[0].append(initialsInput);
+        console.log(countDown);
+    }
 
     beginButton.addEventListener("click", setCard);
     beginButton.addEventListener("click", startTimer);
-    
-
-    // choices.addEventListener("click", function(event) {
-    //     event.preventDefault();
-    //     console.dir(event.target);
-    //   });
-    
-    
- 
+    checkAnswer.addEventListener("click", answerModal);
+    checkAnswer.addEventListener("click", function() {
+        closeModal.style.display = "inline-block";
+        xButton.style.display = "inline-block";
+    });
+    closeModal.addEventListener("click", clearChoices);
+    closeModal.addEventListener("click",setCard);
+    closeModal.addEventListener("click", startTimer);
+    xButton.addEventListener("click", clearChoices);
+    xButton.addEventListener("click",setCard);
+    xButton.addEventListener("click", startTimer);
 });
