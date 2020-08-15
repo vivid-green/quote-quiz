@@ -12,7 +12,7 @@ body {
 
 .card-title {
     font-family: 'Bungee Shade', cursive;
-    font-size: 8vw;
+    font-size: 10vw;
 }
 
 .card-img-top {
@@ -24,7 +24,7 @@ body {
 
 .questionMark {
     font-family: 'Bungee Shade', cursive;
-    font-size: 8vw;
+    font-size: 10vw;
     text-align: center;
 }
 
