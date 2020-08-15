@@ -1,6 +1,6 @@
 # quote-quiz
 
- ![Website Screenshot](/Assets/img/website-screenshot.png)
+ ![Website Screenshot](./Assets/img/website-screenshot.png)
 
  Website Link [Quote Quiz](https://vivid-green.github.io/quote-quiz/quotes-quiz "Quote Qize Website").
 
