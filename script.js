@@ -165,6 +165,7 @@ $( document ).ready(function() {
     function triggerModal(event) {
         // console.dir(event.target);
         // console.dir(closeModal,xButton);
+        checkAnswer.style.display = "inline-block";
         closeModal.style.display = "none";
         xButton.style.display = "none";
         userAnswer = quotes[event.target.id];
@@ -283,6 +284,7 @@ $( document ).ready(function() {
 
         let results = Object.entries(scores);
         let scoresList = document.createElement("ol");
+        scoresList.style.textAlign = "center";
         cardText[0].appendChild(scoresList);
         let orderedList = cardText[0].lastChild;
 
@@ -298,6 +300,7 @@ $( document ).ready(function() {
     checkAnswer.addEventListener("click", function() {
         closeModal.style.display = "inline-block";
         xButton.style.display = "inline-block";
+        checkAnswer.style.display = "none";
     });
     closeModal.addEventListener("click", clearChoices);
     closeModal.addEventListener("click", pauseTimer);
