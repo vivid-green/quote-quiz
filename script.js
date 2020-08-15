@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    
+    // Object containing data for quotes, names and img sources.
     const quotes = {
         gandolf: {
             name: "Gandolf",
@@ -83,6 +83,7 @@ $( document ).ready(function() {
         },
     }
 
+    // Declaring variables for DOM creation elements and setting attributes. Variables also include timer and count stuff too.
     const quotesKeys = Object.keys(quotes);
     let interval;
     let countDown = 180;
@@ -121,12 +122,12 @@ $( document ).ready(function() {
     let answer;
     let userAnswer;
 
-    // console.log(quotes);
-    
+    // Clear (pause) interval (timer).    
     function pauseTimer(event) {
         clearInterval(interval);
     }
 
+    // Clears the DOM bootstrap card of all multiple choice buttons.
     function clearChoices() {
         let choices = document.querySelectorAll(".choices");
         for(i = 0; i < choices.length; i++) {
@@ -134,6 +135,7 @@ $( document ).ready(function() {
         }
     }
 
+    // Creates and appends DOM bootstrap card with buttons from quotes.name
     function randomizeChoices (answer, index) {
         // console.log(answer, index);
         let randomChoices = [];
@@ -162,6 +164,7 @@ $( document ).ready(function() {
         });
     }
 
+    // Triggers the modal and sets DOM elements and attributes for the modal content.
     function triggerModal(event) {
         // console.dir(event.target);
         // console.dir(closeModal,xButton);
@@ -178,7 +181,8 @@ $( document ).ready(function() {
         modal[0].appendChild(personImg);
         pauseTimer();
     }
-    
+
+    // Sets the bootstrap card content for quote question and calls randomizeChoices function to populate multiple choice button elements.
     function setCard(event) {
         if(questionIndex === quotesKeys.length) {
             pauseTimer();
@@ -201,6 +205,7 @@ $( document ).ready(function() {
         }
     }
 
+    //Starts interval (timer).
     function startTimer(event) {      
         if(countDown > 0) {
             interval = setInterval(function(){
@@ -216,6 +221,7 @@ $( document ).ready(function() {
         }
     }
 
+    // Logic to discern right from wrong out of the users mulitple choice selection.
     function answerModal(event) {
         if(userAnswer.name === answer.name) {
             modalTitle[0].innerHTML = "You answered correct!";
@@ -234,6 +240,7 @@ $( document ).ready(function() {
         }
     }
 
+    // Resets DOM bootstrap card for end game content.
     function endGame(event) {
         // countText.style.fontSize = "8rem"
         countText.innerHTML = "GAME OVER";
@@ -248,6 +255,7 @@ $( document ).ready(function() {
         card[0].lastChild.append(submitButton);
     }
 
+    // Resets DOM bootstrap card for score/initials submission to local storage.
     function saveInitials(event) {
 
         event.preventDefault();
@@ -267,6 +275,7 @@ $( document ).ready(function() {
         window.location.href="./quotes-quiz.html";
     }
 
+    // Sets DOM to display the highscores data from local storage.
     function viewHighscores(event) {
         carousel.remove();
         beginButton.remove();
@@ -295,6 +304,7 @@ $( document ).ready(function() {
         }
     }
 
+    // All event listeners tied to DOM content functions.
     beginButton.addEventListener("click", setCard);
     checkAnswer.addEventListener("click", answerModal);
     checkAnswer.addEventListener("click", function() {
