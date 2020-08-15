@@ -12,7 +12,7 @@ body {
 
 .card-title {
     font-family: 'Bungee Shade', cursive;
-    font-size: 80px;
+    font-size: 50px;
 }
 
 .card-img-top {
@@ -33,13 +33,13 @@ body {
     font-size: 35px;
 }
 
-.highscores {
+.nav-link {
     font-size: 20px;
     color: white;    
 }
 
-.highscores:hover {
-    color: #fbed8d;
+.nav-link:hover {
+    color: #fbed8d !important;
 }
 
 .questionMarkImg {
@@ -61,7 +61,7 @@ body {
 
 #begin-button {
     margin: 10px;
-    font-size: 80px;
+    font-size: 50px;
     background-color: rgb(46, 46, 46);
     color: white;
     font-family: 'Bungee Shade', cursive;
@@ -73,7 +73,7 @@ body {
     background-color: #4A7EBB;
 }
 
-.initials-input {
+#initials-text {
     background-color: #212529;
     color: white;
     font-family: 'Bungee Shade', cursive;
@@ -81,4 +81,18 @@ body {
     text-align: center;
     border: none;
     border-radius: 10px;
+}
+
+#submit-button {
+    margin: 10px;
+    font-size: 50px;
+    background-color: rgb(46, 46, 46);
+    color: white;
+    font-family: 'Bungee Shade', cursive;
+    border: none;
+    border-radius: 20px;
+}
+
+#submit-initials:hover {
+    background-color: #4A7EBB;
 }

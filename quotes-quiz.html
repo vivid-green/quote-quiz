@@ -9,11 +9,23 @@
     <title>Quotes Quiz</title>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark">
-      <a class="navbar-brand" href="./quotes-quiz.html">
-        <img src="./Assets/img/questionMark.png" class="questionMarkImg" width="50" height="50" alt="" loading="lazy">
-      </a>
-      <a class="nav-link highscores" href="#">View Highscores</a>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="./quotes-quiz.html">
+      <img src="./Assets/img/questionMark.png" class="questionMarkImg" width="50" height="50" alt="" loading="lazy">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="./quotes-quiz.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="highscores-link">View Highscores</a>
+        </li>
+      </ul>
     </nav>
     <div class="container">
         <div class="row">
@@ -43,7 +55,7 @@
                     </div>
                   <div class="card-body">
                     <h5 class="card-title">WELCOME</h5>
-                    <p class="card-text">This is a timed triva quiz to test your knowledge of who said what. You have 1 minute to answer as many questions as you can. Each question answered wrong will result in a 10 second detraction of your current count down time. If all questions are answered within the time limit, you are a true master of quotes. If you run out of time...don't quote me on this, but I think you lose. Feel free to try again and break the highscore.</p>
+                    <p class="card-text">This is a timed triva quiz to test your knowledge of who said what. You have 2 minutes to answer as many questions as you can. Each question answered wrong will result in a 5 second detraction of your current count down time. If all questions are answered within the time limit, you are a true master of quotes. If you run out of time...don't quote me on this, but I think you lose. Feel free to try again and break the highscore.</p>
                     <a href="#" class="btn btn-primary" id="begin-button">BEGIN</a>
                   </div>
                 </div>

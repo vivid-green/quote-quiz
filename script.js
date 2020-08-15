@@ -85,8 +85,9 @@ $( document ).ready(function() {
 
     const quotesKeys = Object.keys(quotes);
     let interval;
-    let countDown = 5;
-    let detraction = 10;
+    let countDown = 120;
+    let detraction = 5;
+    const highscoresLink = document.getElementById("highscores-link");
     const beginButton = document.getElementById("begin-button");
     const carousel = document.getElementById("people");
     const card = document.getElementsByClassName("card");
@@ -99,14 +100,28 @@ $( document ).ready(function() {
     const checkAnswer = document.getElementById("check-answer");
     const closeModal = document.getElementById("close-modal");
     const xButton = document.getElementById("x-button");
-    const initialsInput = document.createElement("input");
-    initialsInput.setAttribute("class", "initials-input");
+    const initialsForm = document.createElement("form");
+        initialsForm.setAttribute("id", "initials-form");
+
+    const formGroup = document.createElement("div");
+        formGroup.setAttribute("class", "form-group");
+
+    const initialsText = document.createElement("input");
+        initialsText.setAttribute("type", "text");
+        initialsText.setAttribute("class", "form-control");
+        initialsText.setAttribute("id", "initials-text");
+
+    const submitButton = document.createElement("button");
+        submitButton.setAttribute("type", "submit");
+        submitButton.setAttribute("class", "btn btn-primary");
+        submitButton.setAttribute("id", "submit-button");
+        submitButton.textContent = "SAVE";
+
     let questionIndex = 0;
     let answer;
     let userAnswer;
-    
-    console.log(quotes);
-    // console.log(quotesKeys);  
+
+    // console.log(quotes);
     
     function pauseTimer(event) {
         clearInterval(interval);
@@ -164,21 +179,28 @@ $( document ).ready(function() {
     }
     
     function setCard(event) {
-        answer = quotes[quotesKeys[questionIndex]];
-        // console.log(answer);
-        carousel.remove();
-        beginButton.remove();
-        countText.setAttribute("class", "questionMark");
-        countText.innerHTML = countDown;
-        card[0].prepend(countText);
-        cardTitle[0].innerHTML = "Who Said: ";
-        cardText[0].innerHTML = "\"" + quotes[quotesKeys[questionIndex]].quote + "\"";
-        // console.log(questionIndex);
-        randomizeChoices(answer,questionIndex);
-        questionIndex++;
+        if(questionIndex === quotesKeys.length) {
+            pauseTimer();
+            endGame();
+        } else {
+            // console.log(quotesKeys.length);
+            answer = quotes[quotesKeys[questionIndex]];
+            // console.log(answer);
+            carousel.remove();
+            beginButton.remove();
+            countText.setAttribute("class", "questionMark");
+            countText.innerHTML = countDown;
+            card[0].prepend(countText);
+            cardTitle[0].innerHTML = "Who Said: ";
+            cardText[0].innerHTML = "\"" + quotes[quotesKeys[questionIndex]].quote + "\"";
+            // console.log(questionIndex);
+            randomizeChoices(answer,questionIndex);
+            questionIndex++;
+            startTimer();
+        }
     }
 
-    function startTimer(event) {
+    function startTimer(event) {      
         if(countDown > 0) {
             interval = setInterval(function(){
                 countDown--;
@@ -218,21 +240,71 @@ $( document ).ready(function() {
         cardTitle[0].innerHTML = "ENTER HIGHSCORE"
         cardTitle[0].style.textAlign = "center";
         cardText[0].style.display = "none";
-        card[0].append(initialsInput);
-        console.log(countDown);
+        card[0].append(initialsForm);
+        card[0].lastChild.append(formGroup);
+        // console.dir(card[0]);
+        card[0].lastChild.lastChild.append(initialsText);
+        card[0].lastChild.append(submitButton);
+    }
+
+    function saveInitials(event) {
+
+        event.preventDefault();
+        // console.dir(initialsForm.elements);
+        // console.log(initialsForm.elements[0].value);
+        let initials = initialsForm.elements[0].value;
+        initials = initials.toUpperCase();
+        // Get the existing data
+        let highscores = localStorage.getItem('highscores');
+        // If no existing data, create an array
+        // Otherwise, convert the localStorage string to an array
+        highscores = highscores ? JSON.parse(highscores) : {};
+        // Add new data to localStorage Array
+        highscores[initials] = countDown;
+        // Save back to localStorage
+        localStorage.setItem('highscores', JSON.stringify(highscores));
+        window.location.href="./quotes-quiz.html";
+    }
+
+    function viewHighscores(event) {
+        carousel.remove();
+        beginButton.remove();
+        pauseTimer();
+        clearChoices();
+        countText.innerHTML = "";
+        cardTitle[0].innerHTML = "HIGHSCORES";
+        cardTitle[0].style.textAlign = "center";
+        cardText[0].innerHTML = "";
+        let scores = JSON.parse(localStorage.getItem("highscores"));
+        if(!scores) {
+            cardText[0].innerHTML = "No highscores have been saved. Play the game and save your score!";
+            return;
+        }
+
+        let results = Object.entries(scores);
+        let scoresList = document.createElement("ol");
+        cardText[0].appendChild(scoresList);
+        let orderedList = cardText[0].lastChild;
+
+        for(i = 0; i < results.length; i++) {
+            let listItem = document.createElement("li");
+            listItem.textContent = results[i][0] + " - Score: " + results[i][1];
+            orderedList.appendChild(listItem);
+        }
     }
 
     beginButton.addEventListener("click", setCard);
-    beginButton.addEventListener("click", startTimer);
     checkAnswer.addEventListener("click", answerModal);
     checkAnswer.addEventListener("click", function() {
         closeModal.style.display = "inline-block";
         xButton.style.display = "inline-block";
     });
     closeModal.addEventListener("click", clearChoices);
+    closeModal.addEventListener("click", pauseTimer);
     closeModal.addEventListener("click",setCard);
-    closeModal.addEventListener("click", startTimer);
     xButton.addEventListener("click", clearChoices);
+    xButton.addEventListener("click", pauseTimer);
     xButton.addEventListener("click",setCard);
-    xButton.addEventListener("click", startTimer);
+    initialsForm.addEventListener("submit", saveInitials);
+    highscoresLink.addEventListener("click", viewHighscores);
 });
