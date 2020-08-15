@@ -234,7 +234,7 @@ $( document ).ready(function() {
     }
 
     function endGame(event) {
-        countText.style.fontSize = "300px"
+        // countText.style.fontSize = "8rem"
         countText.innerHTML = "GAME OVER";
         clearChoices();
         cardTitle[0].innerHTML = "ENTER INITIALS"
