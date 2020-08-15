@@ -85,7 +85,7 @@ $( document ).ready(function() {
 
     const quotesKeys = Object.keys(quotes);
     let interval;
-    let countDown = 120;
+    let countDown = 180;
     let detraction = 5;
     const highscoresLink = document.getElementById("highscores-link");
     const beginButton = document.getElementById("begin-button");
@@ -237,7 +237,7 @@ $( document ).ready(function() {
         countText.style.fontSize = "300px"
         countText.innerHTML = "GAME OVER";
         clearChoices();
-        cardTitle[0].innerHTML = "ENTER HIGHSCORE"
+        cardTitle[0].innerHTML = "ENTER INITIALS"
         cardTitle[0].style.textAlign = "center";
         cardText[0].style.display = "none";
         card[0].append(initialsForm);
